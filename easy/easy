@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+namespace easy;
+
+define('EASY_CONSOLE',true);
+
+require __DIR__ . '/vendor/autoload.php';
+
+//todo

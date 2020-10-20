@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+namespace app;
+
+require __DIR__ . '/vendor/autoload.php';
+
+use easy\swoole\Server;
+
+Server::run();
