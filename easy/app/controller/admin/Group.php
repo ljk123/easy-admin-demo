@@ -12,7 +12,7 @@ class Group extends Common
 {
     /**
      *
-     * @permission 账号管理-分组管理-查看
+     * @permission 账号管理-分组管理
      * @param GroupModel $group
      * @return array
      */

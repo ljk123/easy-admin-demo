@@ -8,10 +8,13 @@
           <el-form-item label="权限" label-width="60px">
             <el-tree
               ref="tree"
-              node-key="md5"
+              :check-on-click-node="true"
+              :expand-on-click-node="false"
+              node-key="authId"
               :default-expand-all="true"
               :props="props"
               :data="auth"
+              :check-strictly="checkStrictly"
               show-checkbox
               >
             </el-tree>
@@ -82,6 +85,7 @@ export default {
       dialogFormVisible:false,
       dialogTitle:'',
       dialogData:{},
+      checkStrictly:false,
       auth:[],
         props: {
           children: 'children',
@@ -177,13 +181,12 @@ export default {
             })
             return
         }
-        //如果是编辑就填入默认值
-        let set_auth=[]
-        this.dialogData.auth.forEach(v=>{
-            if(v.substr(0,8)!=='not_leaf')
-            set_auth.push(v)
-        })
-        this.$refs.tree.setCheckedKeys(set_auth)
+        this.$refs.tree.setCheckedKeys([])
+        //不知道为什么 延迟才生效
+        setTimeout(()=>{this.dialogData.auth.forEach(val=>{
+            this.$refs.tree.setChecked(val,true)
+        })},0)
+        
     },
     submitDialogForm(){
         this.$refs.ruleForm.validate(valid => {
@@ -225,9 +228,9 @@ const in_tree_obj=(obj,label)=>{
 }
 const array2tree=(array)=>{
     let tree=[]
-    for(let md5 in array)
+    for(let authId in array)
     {
-        let item=array[md5],treeCopy=tree
+        let item=array[authId],treeCopy=tree
        for(let level=0;level<item.length;level++)
        {
            let pos=in_tree_obj(treeCopy,item[level])
@@ -240,12 +243,11 @@ const array2tree=(array)=>{
                treeCopy=treeCopy[pos].children
            }
            else{
-               treeCopy.push({label:item[level],md5:level===item.length-1?md5:"not_leaf"+md5})
+               treeCopy.push({label:item[level],authId})
                level--
            }
        } 
     }
-    console.log(tree)
     return tree
 }
 </script>
