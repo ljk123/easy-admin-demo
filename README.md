@@ -1,2 +1,2 @@
 ## 介绍 
-easyPHP+vue 写的admin后台
+easyPHP+vue 写的admin后台模板
