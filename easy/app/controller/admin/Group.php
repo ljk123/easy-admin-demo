@@ -17,7 +17,8 @@ class Group extends Common
      * @param GroupModel $group
      * @return array
      */
-    public function index(GroupModel $group){
+    public function index(GroupModel $group)
+    {
         return self::success($group->append('create_time_format')->select());
     }
 
@@ -29,44 +30,34 @@ class Group extends Common
      * @throws InvalidArgumentException
      * @throws Exception
      */
-    public function save(Request $request,GroupModel $group)
+    public function save(Request $request, GroupModel $group)
     {
-        $data = $request->only(['id','auth','desc','name']);
-        //todo 框架增加验证器 控制器验证 或者嵌入模型
-        if(0)
-        {
-            return self::error('验证失败 xxxx');
+        $data = $request->only(['id', 'auth', 'desc', 'name']);
+        if (false === $group->validate($data)) {
+            return self::error($group->getError());
         }
-        $data['auth']=implode(',',$data['auth']);
+        $data['auth'] = implode(',', $data['auth']);
         $id = $data['id'];
         unset($data['id']);
-        if(!empty($id))
-        {
-            if(false===$info = $group->where(['id'=>$id])->find())
-            {
+        if (!empty($id)) {
+            if (false === $info = $group->where(['id' => $id])->find()) {
                 return self::error($group->getError());
             }
-            if(empty($info))
-            {
+            if (empty($info)) {
                 return self::error('未查找到数据');
             }
-            if($id==1)
-            {
+            if ($id == 1) {
                 return self::error('演示平台不能修改管理员');
             }
-            if(false===$num=$group->where(['id'=>$id])->save($data))
-            {
+            if (false === $num = $group->where(['id' => $id])->save($data)) {
                 return self::error('修改数据失败');
             }
-            if($num===0)
-            {
+            if ($num === 0) {
                 return self::error('您未修改数据');
             }
-        }
-        else{
-            $data['create_time']=time();
-            if(false===$id=$group->add($data))
-            {
+        } else {
+            $data['create_time'] = time();
+            if (false === $id = $group->add($data)) {
                 self::error($group->getError());
             }
         }
@@ -81,31 +72,26 @@ class Group extends Common
      * @return array
      * @throws InvalidArgumentException
      */
-    public function del(Request $request,GroupModel $group,UserModel $user){
+    public function del(Request $request, GroupModel $group, UserModel $user)
+    {
         $id = $request->post('id');
-        if(empty($id))
-        {
+        if (empty($id)) {
             return self::error('参数错误');
         }
-        $info = $group->where(['id'=>$id])->find();
-        if(empty($info))
-        {
+        $info = $group->where(['id' => $id])->find();
+        if (empty($info)) {
             return self::error('不存在的分组');
         }
-        if($id==1)
-        {
+        if ($id == 1) {
             return self::error('演示平台不能修改管理员');
         }
-        if(false===$users=$user->where(['group_id'=>$id])->find())
-        {
+        if (false === $users = $user->where(['group_id' => $id])->find()) {
             return self::error($group->getError());
         }
-        if(!empty($users))
-        {
+        if (!empty($users)) {
             return self::error('该分组下存在用户，不能删除');
         }
-        if(false===$group->where(['id'=>$id])->delete())
-        {
+        if (false === $group->where(['id' => $id])->delete()) {
             return self::error($group->getError());
         }
         return self::success('删除成功');

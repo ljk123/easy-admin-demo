@@ -10,7 +10,7 @@ use Throwable;
 class Handle implements UserHandleInterface
 {
 
-    public function report(Throwable $e):bool
+    public function report(Throwable $e): bool
     {
 //        Container::getInstance()->get('app');
 //        Container::getInstance()->get('request');
