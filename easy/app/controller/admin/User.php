@@ -4,17 +4,16 @@
 namespace app\controller\admin;
 
 
+use app\logic\Role as RoleLogic;
 use app\logic\Token;
 use app\model\User as UserModel;
+use easy\Exception;
 use easy\exception\InvalidArgumentException;
 use easy\Request;
+use easy\Validate;
 
 class User extends Common
 {
-    protected function __initialize(){
-
-    }
-
     /**
      * @nologin
      * @param Request $request
@@ -89,13 +88,17 @@ class User extends Common
      * @return array
      * @permission 账号管理-账号管理-新增/修改
      * @throws InvalidArgumentException
+     * @throws Exception
      */
     public function save(Request $request,UserModel $user){
         $data = $request->only(['id','username','pwd','status','group_id']);
-        //todo 框架增加验证器 控制器验证 或者嵌入模型
-        if(0)
+        $valid=new Validate();
+        if(false===$valid->validate($data,[
+                'username'  => 'required|min_len:3,max_len:20',
+                'group_id'  => 'required',
+            ])->isOk())
         {
-            return self::error('验证失败 xxxx');
+            return self::error($valid->getErrors()[0]);
         }
         if(!empty($data['pwd']))
         {
@@ -108,6 +111,10 @@ class User extends Common
         unset($data['id']);
         if(!empty($id))
         {
+            if($id==1)
+            {
+                return self::error('演示平台不能修改管理员');
+            }
             if(false===$info = $user->where(['id'=>$id])->find())
             {
                 return self::error($user->getError());
@@ -150,6 +157,10 @@ class User extends Common
         {
             return self::error('参数错误');
         }
+        if($id==1)
+        {
+            return self::error('演示平台不能修改管理员');
+        }
         $info = $user->where(['id'=>$id])->find();
         if(empty($info))
         {
@@ -166,11 +177,13 @@ class User extends Common
         return self::success('删除成功');
     }
     /**
+     * 根据权限获取菜单
      * @param Request $request
      * @return array
      */
     public function menu(Request $request,Token $token)
     {
+        //哎 还没想好怎么写
         $all_menu=
             [
                 [
@@ -186,7 +199,6 @@ class User extends Common
                         [
                             'name'=>'分组管理',
                             'link'=>'/users/group',
-                            'auth'=>1
                         ],
                         [
                             'name'=>'账号管理',
@@ -195,6 +207,7 @@ class User extends Common
                     ]
                 ]
             ];
+        $role = new RoleLogic(__DIR__,__NAMESPACE__);
 
         return self::success($all_menu);
     }

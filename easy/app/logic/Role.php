@@ -47,7 +47,6 @@ class Role
                                 {
                                     $role=explode('-',trim(substr($line,$pos+strlen('@permission'))));
                                     $roles[md5($controller.'::'.$method->name)]=$role;
-//                                    $roles[($controller.'::'.$method->name)]=$role;
                                 }
                             }
                         }

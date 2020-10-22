@@ -4,12 +4,6 @@
   "require": {
     "easyphp/easyphp": "dev-master"
   },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "../composer/framework"
-    }
-  ],
   "autoload": {
     "psr-4": {
       "app\\": "app"

@@ -5,6 +5,7 @@ namespace app\controller\admin;
 
 use app\model\Group as GroupModel;
 use app\model\User as UserModel;
+use easy\Exception;
 use easy\exception\InvalidArgumentException;
 use easy\Request;
 
@@ -26,6 +27,7 @@ class Group extends Common
      * @param GroupModel $group
      * @return array
      * @throws InvalidArgumentException
+     * @throws Exception
      */
     public function save(Request $request,GroupModel $group)
     {
@@ -47,6 +49,10 @@ class Group extends Common
             if(empty($info))
             {
                 return self::error('未查找到数据');
+            }
+            if($id==1)
+            {
+                return self::error('演示平台不能修改管理员');
             }
             if(false===$num=$group->where(['id'=>$id])->save($data))
             {
@@ -85,6 +91,10 @@ class Group extends Common
         if(empty($info))
         {
             return self::error('不存在的分组');
+        }
+        if($id==1)
+        {
+            return self::error('演示平台不能修改管理员');
         }
         if(false===$users=$user->where(['group_id'=>$id])->find())
         {
