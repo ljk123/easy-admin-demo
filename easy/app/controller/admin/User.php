@@ -96,7 +96,7 @@ class User extends Common
         if(false===$valid->validate($data,[
                 'username'  => 'required|min_len:3|max_len:20',
                 'group_id'  => 'required',
-            ])->isOk())
+            ],true)->isOk())
         {
             return self::error($valid->getErrors()[0]);
         }
