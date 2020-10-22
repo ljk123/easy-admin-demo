@@ -23,7 +23,7 @@ class Common
     {
         $this->app=$app;
         //允许跨域
-        $app->response->setHeader('Access-Control-Allow-Origin',"*");
+        $app->response->setHeader('Access-Control-Allow-Origin',"https://admin-demo.easy-php.cn");
         $app->response->setHeader('Access-Control-Allow-Headers',"*");
         $app->response->setHeader('Access-Control-Allow-Methods',"*");
 
