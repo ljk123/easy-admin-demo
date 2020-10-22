@@ -94,7 +94,7 @@ class User extends Common
         $data = $request->only(['id','username','pwd','status','group_id']);
         $valid=new Validate();
         if(false===$valid->validate($data,[
-                'username'  => 'required|min_len:3,max_len:20',
+                'username'  => 'required|min_len:3|max_len:20',
                 'group_id'  => 'required',
             ])->isOk())
         {
