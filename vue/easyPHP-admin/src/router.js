@@ -5,104 +5,11 @@ import Full from '@/containers/Full'
 // 把下面的路由 作懒加载处理
 const Login = () => import('@/views/Login.vue')
 const Dashboard = () => import('@/views/dashboard/Dashboard.vue')
-const Diagram = () => import(/* webpackChunkName: "charts" */ '@/views/charts/Diagram.vue')
-const Slider = () => import(/* webpackChunkName: "dashboard" */ '@/views/charts/Slider.vue')
-const Tables = () => import(/* webpackChunkName: "tables" */ '@/views/tables/Tables.vue')
-const List = () => import(/* webpackChunkName: "tables" */ '@/views/tables/list/List.vue')
-const Details = () => import(/* webpackChunkName: "tables" */ '@/views/tables/details/Details.vue')
-const Setting = () => import(/* webpackChunkName: "tables" */ '@/views/setting/Setting.vue')
-const NotFind = () => import(/* webpackChunkName: "home" */ '@/views/404.vue')
+const NotFind = () => import('@/views/404.vue')
 
 Vue.use(Router)
 
-// const asyncRouter=[
-//     {
-//       path: '/',
-//       redirect: '/dashboard',
-//       name: 'Full',
-//       component: Full,
-//       meta: {
-//         breadcrumb: '首页',
-//         requireLogin: true
-//       },
-//       children: [
-//         {
-//           path: '/dashboard',
-//           name: 'Dashboard',
-//           component: Dashboard,
-//           meta: {
-//             breadcrumb: '概览',
-//             title: '概览',
-//             requireLogin: true
-//           }
-//         },
-//         {
-//           path: '/charts/diagram',
-//           name: 'Diagram',
-//           component: Diagram,
-//           meta: {
-//             breadcrumb: '图表一',
-//             title: 'Diagram',
-//             requireLogin: true
-//           }
-//         },
-//         {
-//           path: '/charts/slider',
-//           name: 'Slider',
-//           component: Slider,
-//           meta: {
-//             breadcrumb: '图表二',
-//             title: 'Slider',
-//             requireLogin: true
-//           }
-//         },
-//         {
-//           path: '/tables',
-//           redirect: '/tables/list',
-//           name: 'Tables',
-//           component: Tables,
-//           meta: {
-//             breadcrumb: '表格',
-//             requireLogin: true
-//           },
-//           children: [
-//             {
-//               path: '/tables/list',
-//               name: 'List',
-//               component: List,
-//               meta: {
-//                 title: 'list',
-//                 breadcrumb: '列表',
-//                 requireLogin: true
-//               }
-//             },
-//             {
-//               path: '/tables/details',
-//               name: 'Details',
-//               component: Details,
-//               meta: {
-//                 title: 'details',
-//                 breadcrumb: '详情',
-//                 requireLogin: true
-//               }
-//             }
-//           ]
-//         },
-//         {
-//           path: '/setting',
-//           name: 'Setting',
-//           component: Setting,
-//           meta: {
-//             breadcrumb: '设置',
-//             requireLogin: true
-//           },
-//         }],
-//         }
-// ]
-
-//todo addrouter 可以多添加个Full redirect到dashboard
 const router = new Router({
-  // mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
@@ -145,77 +52,26 @@ const router = new Router({
             requireLogin: true
           }
         },
-        
-        
-        
-        
-        
-        
-        
-        
-        
         {
-          path: '/charts/diagram',
-          name: 'Diagram',
-          component: Diagram,
+          path: '/article/lists',
+          name: 'Article',
+          component: ()=>import('@/views/article/Article.vue'),
           meta: {
-            breadcrumb: '图表一',
-            title: 'Diagram',
+            title: '文章管理',
+            breadcrumb: '内容管理',
             requireLogin: true
           }
         },
         {
-          path: '/charts/slider',
-          name: 'Slider',
-          component: Slider,
+          path: '/article/cate',
+          name: 'ArticleCate',
+          component: ()=>import('@/views/article/Cate.vue'),
           meta: {
-            breadcrumb: '图表二',
-            title: 'Slider',
+            title: '分组管理',
+            breadcrumb: '分组管理',
             requireLogin: true
           }
         },
-        {
-          path: '/tables',
-          redirect: '/tables/list',
-          name: 'Tables',
-          component: Tables,
-          meta: {
-            breadcrumb: '表格',
-            requireLogin: true
-          },
-          children: [
-            {
-              path: '/tables/list',
-              name: 'List',
-              component: List,
-              meta: {
-                title: 'list',
-                breadcrumb: '列表',
-                requireLogin: true
-              }
-            },
-            {
-              path: '/tables/details',
-              name: 'Details',
-              component: Details,
-              meta: {
-                title: 'details',
-                breadcrumb: '详情',
-                requireLogin: true
-              }
-            }
-          ]
-        },
-        {
-          path: '/setting',
-          name: 'Setting',
-          component: Setting,
-          meta: {
-            breadcrumb: '设置',
-            requireLogin: true
-          },
-        }
-        
       ]
     },
     {

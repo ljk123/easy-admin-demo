@@ -79,7 +79,7 @@ class Common
      * @param $data
      * @return array
      */
-    protected static function success($data)
+    public static function success($data)
     {
         return [
             'data' => $data,//数据
@@ -94,7 +94,7 @@ class Common
      * @param $data
      * @return array
      */
-    protected static function error($msg, $data = null)
+    public static function error($msg, $data = null)
     {
         return [
             'data' => $data,//数据

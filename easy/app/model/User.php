@@ -6,6 +6,11 @@ namespace app\model;
 
 use easy\Model;
 
+/**
+ * Class Group
+ * @validate \app\validate\User
+ * @package app\model
+ */
 class User extends Model
 {
     protected function getStatusWordAttr($val, $data)

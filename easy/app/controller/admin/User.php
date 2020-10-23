@@ -90,6 +90,9 @@ class User extends Common
     public function save(Request $request, UserModel $user)
     {
         $data = $request->only(['id', 'username', 'pwd', 'status', 'group_id']);
+        if (false === $user->validate($data)) {
+            return self::error($user->getError());
+        }
         $valid = new Validate();
         if (false === $valid->validate($data, [
                 'username' => 'required|min_len:3|max_len:20',
@@ -174,6 +177,21 @@ class User extends Common
                     'name' => '概览',
                     'link' => '/dashboard',
                     'icon' => 'el-icon-odometer',
+                ],
+                [
+                    'name' => '内容管理',
+                    'link' => '/article',
+                    'icon' => 'el-icon-document',
+                    'sub' => [
+                        [
+                            'name' => '分类管理',
+                            'link' => '/article/cate',
+                        ],
+                        [
+                            'name' => '文章管理',
+                            'link' => '/article/lists',
+                        ],
+                    ]
                 ],
                 [
                     'name' => '账号管理',

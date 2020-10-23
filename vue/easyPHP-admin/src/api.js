@@ -94,4 +94,24 @@ export default {
   delUserGroup(id){
       return instance.post('/admin/group/del',{id})
   },
+  //文章
+  articleLists(){
+      return instance.get('/admin/article/lists')
+  },
+  saveArticle(data){
+      return instance.post('/admin/article/save',data)
+  },
+  delArticle(id){
+      return instance.post('/admin/article/del',{id})
+  },
+  //分类
+  articleCateLists(){
+      return instance.get('/admin/article/cate_lists')
+  },
+  saveArticleCate(data){
+      return instance.post('/admin/article/save_cate',data)
+  },
+  delArticleCate(id){
+      return instance.post('/admin/article/del_cate',{id})
+  },
 }

@@ -9,8 +9,14 @@ import './plugins/element.js'
 import './plugins/vcharts.js'
 import 'swiper/dist/css/swiper.css'
 
-Vue.config.productionTip = false
+// mavonEditor    markdown 富文本班级起
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditor)
 
+
+
+Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)
 
 new Vue({
