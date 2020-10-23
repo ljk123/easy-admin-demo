@@ -2,7 +2,7 @@
   "name": "easyphp/easy",
   "type": "project",
   "require": {
-    "easyphp/easyphp": "^1.0"
+    "easyphp/easyphp": "1.0.*@dev"
   },
   "autoload": {
     "psr-4": {

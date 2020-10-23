@@ -13,12 +13,6 @@ use easy\Model;
  */
 class Group extends Model
 {
-    public function __construct($validate = null)
-    {
-        parent::__construct($validate);
-//        var_dump(1);
-    }
-
     protected function getCreateTimeFormatAttr($val, $data)
     {
         return date('Y-m-d H:i:s', $data['create_time']);

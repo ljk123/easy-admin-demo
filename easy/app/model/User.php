@@ -4,6 +4,7 @@
 namespace app\model;
 
 
+use easy\Container;
 use easy\Model;
 
 /**
@@ -30,11 +31,19 @@ class User extends Model
 
     protected function getGroupNameAttr($val, $data)
     {
-        return (new Group())->where(['id' => $data['group_id']])->value('name');
+        if (is_null($Group = Container::getInstance()->get(Group::class))) {
+            $Group = new Group();
+            Container::getInstance()->bind(Group::class, $Group);
+        }
+        return $Group->where(['id' => $data['group_id']])->value('name');
     }
 
     protected function getGroupAuthAttr($val, $data)
     {
-        return (new Group())->where(['id' => $data['group_id']])->field('auth')->find()['auth'];
+        if (is_null($Group = Container::getInstance()->get(Group::class))) {
+            $Group = new Group();
+            Container::getInstance()->bind(Group::class, $Group);
+        }
+        return $Group->where(['id' => $data['group_id']])->field('auth')->find()['auth'];
     }
 }
